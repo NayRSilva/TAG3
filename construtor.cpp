@@ -112,7 +112,7 @@ void montaArestas (fstream& fileStream, vector<vector<int> >& grafo) {
 }*/
 
 // retorna um vetor com os nomes das materias, a partir do arquivo lido
-int vetorizaProfessores(fstream &fileStream)
+vector<vector<int>> vetorizaProfessores(fstream &fileStream)
 {
 
 	if (!fileStream.is_open())
@@ -120,7 +120,7 @@ int vetorizaProfessores(fstream &fileStream)
 		printf("ERROR: Leitura do Arquivo - vetorizaProfessores()");
 		exit(EXIT_FAILURE);
 	}
-	int n[100][5];
+	Professor n;
 	string buffer;
 	string teste;
 
@@ -156,8 +156,8 @@ int vetorizaProfessores(fstream &fileStream)
 		vector<int> numero;
 		palavras = split(teste, ' ');//separa minha string em array de string
 		int aux;//aux p conversao de string em int
-		const char *a;//nao sei como foi so sei que foi assim
-		for (int h = 0; h < palavras.size(); h++)//loop p transformar array de string em array de numero
+		const char *a;//nao sei como foi so sei que
+		for (int h = 0; h < palavras.size(); h++)
 		{
 			a = palavras[i].c_str();
 			sscanf(a, "%d", &aux);
@@ -169,13 +169,13 @@ int vetorizaProfessores(fstream &fileStream)
 		// }
 
 		//estrutura do vetor numero: [P, habilitaçao, Escolas...]
-		vector<int> habilitacao;//vetor aux
-		for (int h = 1; h < numero.size(); h++)//vou tentar montar minha matrix. odeio matriz
+		vector<int> habilitacao;
+		for (int h = 1; h < numero.size(); h++)
 		{
 			if (h == 1)
 			{
 				habilitacao.push_back(numero[h]); //como temos um vetor de vetor, nao posso so mandar uma int, tenho que mandar um vetor de int contendo apenas uma posição
-			//	n[i][j] = habilitacao;		  //logo apos esse passo eu tenho
+				n.push_back(habilitacao);		  //logo apos esse passo eu tenho
 												  //vetor n:[[1] ]
 			}
 			else

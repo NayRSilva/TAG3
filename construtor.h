@@ -8,8 +8,8 @@
 
 using namespace std;
 
-typedef vector<vector<int>> Grafo;
-typedef int Professor[100][5];
+typedef vector<vector<int> > Grafo;
+typedef vector<vector<int> > Professor;
 typedef int Escolas[50][2];
 
 //vector<vector<int> > criarGrafo (const string& fileName);
@@ -18,7 +18,7 @@ typedef int Escolas[50][2];
 
 //size_t tamanhoGrafo (fstream& fileStream);
 
-int vetorizaProfessores (fstream& fileStream);
+vector<vector<int> > vetorizaProfessores (fstream& fileStream);
 
 //vector<int> vetorizaEscolas (fstream& fileStream);
 
