@@ -4,12 +4,53 @@
 
 #include <string>
 #include <vector>
+#include <stdlib.h>
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include "construtor.h"
-
 using namespace std;
 
+vector<string> split(string s, char delim)
+{
+	vector<string> flds;
+	if (!flds.empty())
+	{
+		flds.clear();
+	}
+	string work = s;
+	string buf = "";
+	int i = 0;
+	while (i < work.length())
+	{
+		if (work[i] != delim)
+		{
+			buf += work[i];
+		}
+		else if (buf.length() > 0)
+		{
+			flds.push_back(buf);
+			buf = "";
+		}
+		i++;
+	}
+	if (!buf.empty())
+	{
+		flds.push_back(buf);
+	}
+	return flds;
+}
+
+string replaceChar(string str, char ch1, char ch2)
+{
+	for (int i = 0; i < str.length(); ++i)
+	{
+		if (str[i] == ch1)
+			str[i] = ch2;
+	}
+
+	return str;
+}
 /*
 vector<vector<int> > criarGrafo (const string& fileName) {
     fstream arquivo(fileName);
@@ -71,34 +112,94 @@ void montaArestas (fstream& fileStream, vector<vector<int> >& grafo) {
 }*/
 
 // retorna um vetor com os nomes das materias, a partir do arquivo lido
-vector<vector<int> > vetorizaProfessores (fstream& fileStream) {
+int vetorizaProfessores(fstream &fileStream)
+{
 
-	if (!fileStream.is_open()){
+	if (!fileStream.is_open())
+	{
 		printf("ERROR: Leitura do Arquivo - vetorizaProfessores()");
 		exit(EXIT_FAILURE);
 	}
-	Professor  n;
+	int n[100][5];
 	string buffer;
+	string teste;
 
 	int i = 0;
 	int j = 0;
-	while (getline(fileStream, buffer)) {
-		if (buffer.find(",") != string::npos) {			// Procura pela string nome
-			char* habilitacao;
 
-			sscanf(buffer.c_str(), " %s", habilitacao);	// Salva o valor										
+	for (int h = 0; h < 3; h++)//pulando linha
+	{ 
+		getline(fileStream, buffer);
+	}
+	while (getline(fileStream, buffer))
+	{
+		if (buffer[0] == '/')
+		{ //para de ler o arquivo quando acaba a parte dos professores
+			printf("xau");
+			break;
+		}
+		//imprime o buffer p conferir
+		//	cout<< buffer;
+		//getchar();
+		teste = replaceChar(buffer, '(', ' '); //funçao pra fazer replace do char pq a pocaria da funçao replace do c++ nao ta funcionando comigo, maldita linguagem infernal
+		teste = replaceChar(teste, ')', ' ');
+		teste = replaceChar(teste, ',', ' ');
+		teste = replaceChar(teste, 'E', ' ');
+		teste = replaceChar(teste, 'P', ' ');
+		teste = replaceChar(teste, ':', ' ');
+		cout << "ou" << teste;
+		//agora devo ter algo no sentido 1 3 10 20 1 3(string)
+		//da o cout p testar
+		//cout<<"ou"<<teste;
+		//vou dividir isso em vetore 1 3 10 30 1
+		vector<string> palavras;
+		vector<int> numero;
+		palavras = split(teste, ' ');//separa minha string em array de string
+		int aux;//aux p conversao de string em int
+		const char *a;//nao sei como foi so sei que foi assim
+		for (int h = 0; h < palavras.size(); h++)//loop p transformar array de string em array de numero
+		{
+			a = palavras[i].c_str();
+			sscanf(a, "%d", &aux);
+			numero.push_back(aux);
+		}
+		//Funçao p imprimir o vetor e verificar bunitinho
+		// for(i= 0; i<numero.size(); i++){
+		// 	cout<<"\n"<<"ola os numero"<< numero[i]<<"\n";
+		// }
 
-			int c_habilitacao = atoi(habilitacao);
-
-
-			n[i][j] = c_habilitacao;
-			i++;						// Insere no vetor
+		//estrutura do vetor numero: [P, habilitaçao, Escolas...]
+		vector<int> habilitacao;//vetor aux
+		for (int h = 1; h < numero.size(); h++)//vou tentar montar minha matrix. odeio matriz
+		{
+			if (h == 1)
+			{
+				habilitacao.push_back(numero[h]); //como temos um vetor de vetor, nao posso so mandar uma int, tenho que mandar um vetor de int contendo apenas uma posição
+			//	n[i][j] = habilitacao;		  //logo apos esse passo eu tenho
+												  //vetor n:[[1] ]
+			}
+			else
+			{
+			}
 		}
 
-		if (buffer.find('\n')) {
-			j++;
-    }
+		// 	getchar();
+		// 	cout<<"ou"<<teste;
+		// 	getchar();
+		// 	//if (buffer.find("P") != string::npos) {			// Procura pela string nome
+		// 	printf("enteir");
+		// 	getchar();
+
+		// 		n[i][j] = c_habilitacao;
+		// 		i++;						// Insere no vetor
+		// //	}
+		// 	if (buffer.find('\n')) {
+		// 		j++;
+		// 		printf("f %d", j);
+		// 	getchar();
+		//}
 	}
+	printf("cabo while");
 	return n;
 }
 

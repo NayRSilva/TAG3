@@ -19,9 +19,9 @@ int main(int argc, char** argv) {
 	Professor professores;
 	Escolas escolas;
 
-	fstream arquivo1("entradaproj3TAG.txt");
-	fstream arquivo2("entradaproj3TAG.txt");
-	fstream arquivo3("entradaproj3TAG.txt");
+	fstream arquivo1("entradaProj3TAG.txt");
+	// fstream arquivo2("entradaProj3TAG.txt");
+	// fstream arquivo3("entradaProj3TAG.txt");
 
 	professores = vetorizaProfessores(arquivo1);
 	//escolas = vetorizaEscolas(arquivo2);
